@@ -12,10 +12,12 @@ public class Snake {
 
     // move function
     public void move(MoveDirection direction) {
-        int headRow = snake.get(0).getRow();
-        int headCol = snake.get(0).getCol();
+        int headRow = snake.get(0).getRow(); //Current row position of the snakes head
+        int headCol = snake.get(0).getCol();//Current column position of the snakes head
         BoardPoint lastHeadPos = new BoardPoint(headRow,headCol);
+
         for (int i = 0; i < snake.size(); i++) {
+            //move in the selected direction
             if (snake.get(i).equals(lastHeadPos)) {
                 if (direction == MoveDirection.UP)
                     snake.get(i).addToRow();//add later
