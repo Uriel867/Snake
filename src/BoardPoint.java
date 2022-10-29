@@ -16,12 +16,14 @@ public class BoardPoint {
         return col;
     }
 
-    public void addToRow(int row){
+    public void addToRow(int row) {
         this.row += row;
+
     }
 
-    public void addToCol(int col){
+    public void addToCol(int col) {
         this.col += col;
+
     }
 
     public boolean equals(BoardPoint other) {
