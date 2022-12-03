@@ -4,29 +4,32 @@ public class Apple {
     int appleX;
     int appleY;
     int applesEaten;
-    int tileSize;
+    GamePanel gp;
+    SnakeBody snake;
     Random rand;
 
-    public Apple(){
+    public Apple(GamePanel gp,SnakeBody snake){
+        this.gp = gp;
+        this.snake = snake;
         rand = new Random();
-        appleX = rand.nextInt(GamePanel.SCREEN_WIDTH);
-        appleY = rand.nextInt(GamePanel.SCREEN_HEIGHT);
+        appleX = rand.nextInt(gp.SCREEN_WIDTH);
+        appleY = rand.nextInt(gp.SCREEN_HEIGHT);
         applesEaten = 0;
-        tileSize = GamePanel.TILE_SIZE;
+
     }
 
     public void addApples() {
-        appleX = rand.nextInt((int) (GamePanel.SCREEN_WIDTH / tileSize)) * tileSize;
-        appleY = rand.nextInt((int) (GamePanel.SCREEN_HEIGHT / tileSize)) * tileSize;
+        appleX = rand.nextInt((int) (gp.SCREEN_WIDTH / gp.TILE_SIZE)) * gp.TILE_SIZE;
+        appleY = rand.nextInt((int) (gp.SCREEN_HEIGHT / gp.TILE_SIZE)) * gp.TILE_SIZE;
     }
 
     public void eatApples() {
-        int xCoordinate = SnakeBody.xCoordinate(0);
-        int yCoordinate = SnakeBody.yCoordinate(0);
+        int xCoordinate = snake.xCoordinate(0);
+        int yCoordinate = snake.yCoordinate(0);
         if (xCoordinate == appleX && yCoordinate == appleY) {
-            int xLastElement = SnakeBody.xCoordinate(SnakeBody.snakeSize() - 1);
-            int yLastElement = SnakeBody.yCoordinate(SnakeBody.snakeSize() - 1);
-            SnakeBody.increaseSnake();
+            int xLastElement = snake.xCoordinate(snake.snakeSize() - 1);
+            int yLastElement = snake.yCoordinate(snake.snakeSize() - 1);
+            snake.increaseSnake();
             applesEaten++;
             addApples();
         }
