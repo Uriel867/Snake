@@ -21,7 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyH = new KeyHandler();
 
     static boolean running = false;
-
+    static ExitGameReason exitGameReason;
     public GamePanel() {
 
         rand = new Random();
@@ -87,7 +87,7 @@ public class GamePanel extends JPanel implements Runnable {
             g2.setColor(Color.CYAN);
             g2.setFont(new Font("TimesRoman", Font.BOLD, 30));
             FontMetrics metrics = getFontMetrics(g.getFont());
-            g2.drawString(" Score: " + apple.getApplesEaten(), (SCREEN_WIDTH - metrics.stringWidth("Score: " + apple.getApplesEaten())) / 2, g.getFont().getSize());
+            g2.drawString(" Score: " + (snakeSize - 1), (SCREEN_WIDTH - metrics.stringWidth("Score: " + (snakeSize - 1))) / 2, g.getFont().getSize());
             //draw snake
             for (int i = 0; i < snakeSize; i++) {
                 int xCoordinate = snake.xCoordinate(i);
@@ -117,9 +117,19 @@ public class GamePanel extends JPanel implements Runnable {
         } catch (Exception E) {
             System.err.println(E.getMessage());
         }
-        g.setColor(Color.red);
-        g.setFont(new Font("TimesRoman", Font.BOLD, 75));
-        FontMetrics metrics2 = getFontMetrics(g.getFont());
-        g.drawString(SystemName + " you are a loser", (SCREEN_WIDTH - metrics2.stringWidth(SystemName + " You are a loser")) / 2, SCREEN_HEIGHT / 2);
+        if (exitGameReason == ExitGameReason.PLAYER_LOST) {
+            g.setColor(Color.red);
+            g.setFont(new Font("Ink Free", Font.BOLD, 75));
+            FontMetrics metrics2 = getFontMetrics(g.getFont());
+            g.drawString(SystemName + " You are a loser", (SCREEN_WIDTH - metrics2.stringWidth(SystemName + " You are a loser")) / 2, SCREEN_HEIGHT / 2);
+        } else {
+            g.setColor(Color.red);
+            g.setFont(new Font("Ink Free", Font.BOLD, 75));
+            FontMetrics metrics2 = getFontMetrics(g.getFont());
+            g.drawString("Goodbye, " + SystemName, (SCREEN_WIDTH - metrics2.stringWidth(SystemName + " You are a loser")) / 2, SCREEN_HEIGHT / 2);
+        }
+    }
+    public SnakeBody getSnake() {
+        return snake;
     }
 }
