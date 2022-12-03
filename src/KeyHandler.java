@@ -18,24 +18,29 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_A:
                 if(direction != 'R') {
                     direction = 'L';
+                    GamePanel.paused = false;
                 }
                 break;
             case KeyEvent.VK_D:
                 if(direction != 'L') {
                     direction = 'R';
+                    GamePanel.paused = false;
                 }
                 break;
             case KeyEvent.VK_W:
                 if(direction != 'D') {
                     direction = 'U';
+                    GamePanel.paused = false;
                 }
                 break;
             case KeyEvent.VK_S:
                 if(direction != 'U') {
                     direction = 'D';
+                    GamePanel.paused = false;
                 }
                 break;
         }
+
     }
 
     @Override

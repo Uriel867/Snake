@@ -21,12 +21,14 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyH = new KeyHandler();
 
     static boolean running = false;
+    static boolean paused = false;
     static ExitGameReason exitGameReason;
+
     public GamePanel() {
 
         rand = new Random();
-        snake = new SnakeBody(0, 0,this);
-        apple = new Apple(this,snake);
+        snake = new SnakeBody(0, 0, this);
+        apple = new Apple(this, snake);
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
@@ -47,35 +49,37 @@ public class GamePanel extends JPanel implements Runnable {
     //This is the core of the game, the game loop
     @Override
     public void run() {
+
 //sort of delay between repainting our screen
-        double drawInterval = 1000000000 / FPS;
-        double delta = 0;
-        long lastTime = System.nanoTime();
-        long currentTime;
+            double drawInterval = 1000000000 / FPS;
+            double delta = 0;
+            long lastTime = System.nanoTime();
+            long currentTime;
 
-        while (gameThread != null) {
-            currentTime = System.nanoTime();
-            delta += (currentTime - lastTime) / drawInterval;
+            while (gameThread != null) {
+
+                    currentTime = System.nanoTime();
+                    delta += (currentTime - lastTime) / drawInterval;
 
 
-            lastTime = currentTime;
-            if (delta >= 1) {   //update information on the board
-                snake.move(keyH.direction);
-                apple.eatApples();
-                snake.checkCollisions();
-                //Draw on screen with updated information
-                repaint();
-                delta--;
+                    lastTime = currentTime;
+                    if (delta >= 1 && !paused) {   //update information on the board
+                        snake.move(keyH.direction);
+                        apple.eatApples();
+                        snake.checkCollisions();
+                        //Draw on screen with updated information
+                        repaint();
+                        delta--;
+                    }
 
 
             }
-
-        }
     }
 
 
     public void paintComponent(Graphics g) {
         if (running) {
+
             super.paintComponent(g);
             int snakeSize = snake.snakeSize();
 
@@ -129,6 +133,7 @@ public class GamePanel extends JPanel implements Runnable {
             g.drawString("Goodbye, " + SystemName, (SCREEN_WIDTH - metrics2.stringWidth(SystemName + " You are a loser")) / 2, SCREEN_HEIGHT / 2);
         }
     }
+
     public SnakeBody getSnake() {
         return snake;
     }
