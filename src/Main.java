@@ -8,9 +8,10 @@ public class Main {
         window.setTitle("Snake game");
 
         GamePanel panel = new GamePanel();
+        Menu menu = new Menu(window);
         window.add(panel);
         window.pack();
-        window .setLocationRelativeTo(null);
+        window.setLocationRelativeTo(null);
         window.setVisible(true);
 
         panel.startGameThread();

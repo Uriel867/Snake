@@ -43,8 +43,11 @@ public class SnakeBody {
 
     public void checkCollisions() {
         for (int i = x.size() - 1; i > 0; i--) {
-            if (Objects.equals(x.get(0), x.get(i)) && Objects.equals(y.get(0), y.get(i)) && x.size() > 2)
+            if (Objects.equals(x.get(0), x.get(i)) && Objects.equals(y.get(0), y.get(i)) && x.size() > 2) {
                 GamePanel.running = false;
+                GamePanel.exitGameReason = ExitGameReason.PLAYER_LOST;
+            }
+
         }
         if (x.get(0) < 0) // left border
             x.set(0, GamePanel.SCREEN_WIDTH);
@@ -72,5 +75,15 @@ public class SnakeBody {
         int addToY = y.get(y.size() - 1);
         x.add(addToX);
         y.add(addToY);
+    }
+
+    public static void clearSnake() {
+        // leaving head intact
+        if (x.size() > 1 && y.size() > 1) {
+            for (int i = x.size()-1; i >= 1; i--) {
+                x.remove(i);
+                y.remove(i);
+            }
+        }
     }
 }
